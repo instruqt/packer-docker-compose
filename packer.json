@@ -1,0 +1,32 @@
+{
+  "variables": {
+    "project_id": "",
+  },
+  "builders": [
+    {
+      "type": "googlecompute",
+      "project_id": "{{user `project_id`}}",
+      "source_image_family": "ubuntu-minimal-1804-lts",
+      "zone": "europe-west1-b",
+      "ssh_username" : "root",
+      "machine_type": "n1-standard-2",
+      "disk_size": "20",
+      "image_name": "knative-{{ user `k8s_version` | clean_image_name }}",
+      "image_labels": {
+        "created": "{{ timestamp }}"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "destination": "/tmp/bootstrap",
+      "source": "files",
+      "type": "file"
+    },
+    {
+      "type": "shell",
+      "script": "bootstrap.sh",
+    }
+  ]
+
+}

@@ -1,0 +1,13 @@
+[Unit]
+Description=Google Compute Engine Network Daemon
+After=local-fs.target network-online.target network.target
+After=google-instance-setup.service
+Wants=local-fs.target network-online.target network.target
+Requires=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/google_network_daemon
+
+[Install]
+WantedBy=multi-user.target
