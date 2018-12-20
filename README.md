@@ -1,5 +1,6 @@
-# Packer recipe for Knative image
+# Packer recipe for Docker compose based setups
 
-Usage:
+Usage: Create a directory inside `files/compose` where you put your Docker Compose
+files. You can add multiple directories, which will result in multiple services.
 
-`make PROJECT=instruqt K8S_VERSION=v1.12.0 force-build`
+Afterwards, run make PROJECT_ID=$YOURPROJECT build
