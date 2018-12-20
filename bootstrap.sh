@@ -30,21 +30,25 @@ apt-get -y install \
 
 apt-get -y remove sshguard
 
-cp -a /tmp/bootstrap/*.sh /usr/bin
 cp -a /tmp/bootstrap/*.service /lib/systemd/system/
 
-curl -L https://github.com/docker/compose/releases/download/1.23.3/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+curl -o /usr/local/bin/docker-compose -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-Linux-x86_64
 chmod +x /usr/local/bin/docker-compose
 
 systemctl daemon-reload
 systemctl enable docker
 systemctl start docker
 
-cp /tmp/bootstrap/compose/* /opt/docker-compose -a
+mkdir -p /opt/docker-compose
+cp -a /tmp/bootstrap/compose/* /opt/docker-compose
 
-# Read the readme in the data/compose directory and replace the service name
-# with the directory name
-for i in `find -type d -maxdepth 1 /data/compose`; do
-  systemctl enable docker-compose@$i
-  systemctl start docker-compose@$i
+# Scan the /opt/docker-compose directory and replace the service name
+# with the directory name and prepull all images
+for i in $(find /opt/docker-compose -mindepth 1 -maxdepth 1 -type d); do
+  pushd "$i"
+  docker-compose pull
+  popd
+
+  svc=$(basename "$i")
+  systemctl enable docker-compose@$svc
 done
