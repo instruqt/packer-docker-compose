@@ -7,8 +7,8 @@
     {
       "type": "googlecompute",
       "project_id": "{{user `project_id`}}",
-      "source_image_family": "ubuntu-minimal-1810",
-      "zone": "europe-west1-b",
+      "source_image_family": "ubuntu-minimal-1804-lts",
+      "zone": "europe-west4-a",
       "ssh_username" : "root",
       "machine_type": "n1-standard-2",
       "disk_size": "20",
