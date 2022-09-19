@@ -32,7 +32,7 @@ apt-get -y remove sshguard
 
 cp -a /tmp/bootstrap/*.service /lib/systemd/system/
 
-curl -o /usr/local/bin/docker-compose -L https://github.com/docker/compose/releases/download/1.27.4/docker-compose-Linux-x86_64
+curl -o /usr/local/bin/docker-compose -L https://github.com/docker/compose/releases/download/v2.10.2/docker-compose-linux-x86_64
 chmod +x /usr/local/bin/docker-compose
 
 systemctl daemon-reload
